@@ -1,0 +1,24 @@
+<script>
+
+let url = 'https://raw.githubusercontent.com/rifani/geojson-political-indonesia/master/IDN_adm_2_kabkota.json';
+
+let supportedProvinces = ["Jakarta Raya", "Banten", "Jawa Barat" , "Jawa Tengah", "Jawa Timur", "Bali", "Yogyakarta"]
+
+fetch(url)
+.then(res => res.json())
+.then(json => {
+	let features = json.features.filter(feature => {
+		return supportedProvinces.includes(feature.properties.NAME_1)
+	});
+
+	for (var i = 0; i < features.length; i++) {
+		let properties = features[i].properties
+    	features[i].properties = { "province" : properties.NAME_1, "city" : properties.NAME_2 };
+  	}
+  	json.features = features
+  	//console.log(json);
+	console.log(JSON.stringify(json));
+})
+.catch(err => { throw err });
+
+</script>
