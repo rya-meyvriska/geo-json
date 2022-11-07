@@ -1,0 +1,17 @@
+<script>
+
+let url = 'https://raw.githubusercontent.com/rya-meyvriska/geo-json/master/indonesia-province-city.json';
+var cities = [];
+
+fetch(url)
+.then(res => res.json())
+.then(json => {
+
+	for(var k in json.features) {
+	    cities.push(json.features[k].properties.city);
+	}
+	console.log(JSON.stringify(cities.sort()));
+})
+.catch(err => { throw err });
+
+</script>
